@@ -1,0 +1,170 @@
+project:
+  # Salt duoc lay tu bien moi truong, khong ghi truc tiep vao file nay.
+  anonymization_salt_env: ANONYMIZATION_SALT
+  min_text_length: 3
+  max_text_length: 10000
+  vietnamese_only: true
+  min_vietnamese_score: 0.12
+  redact_mentions: true
+  redact_urls: true
+  redact_emails: true
+  redact_phones: true
+  # Mac dinh khong luu link/ID goc de giam kha nang tai dinh danh nguoi dung.
+  store_permalinks: false
+  pseudonymize_object_ids: true
+  store_image_urls: true
+  max_image_urls: 10
+  # Tin hieu hoc thuat truc tiep.
+  education_keywords:
+    - hoc
+    - hoc tap
+    - sinh vien
+    - hoc sinh
+    - giang vien
+    - giao vien
+    - mon hoc
+    - bai tap
+    - thi
+    - diem
+    - deadline
+    - do an
+    - khoa
+    - truong
+    - lop
+    - tin chi
+    - hoc phi
+    - tot nghiep
+    - thuc tap
+    - confession
+  # Tin hieu cho thay bai viet/binh luan dang dien ra trong moi truong hoc tap.
+  education_context_keywords:
+    - truong
+    - dai hoc
+    - cao dang
+    - hoc vien
+    - khoa
+    - lop
+    - sinh vien
+    - hoc sinh
+    - giang vien
+    - giao vien
+    - thay
+    - co
+    - ky tuc xa
+    - ktx
+    - campus
+    - cau lac bo
+    - clb
+    - doan truong
+    - confession truong
+  # Chu de xa hoi/cam xuc co the xay ra trong truong, khong chi rieng viec hoc.
+  learning_environment_topics:
+    - tinh yeu
+    - crush
+    - yeu tham
+    - hen ho
+    - chia tay
+    - drama
+    - phot
+    - boc phot
+    - xin loi
+    - dinh chinh
+    - mau thuan
+    - cai nhau
+    - bat nat
+    - bao luc hoc duong
+    - quay roi
+    - ap luc
+    - stress
+    - tram cam
+    - co lap
+    - ban be
+    - roommate
+    - mat do
+    - lua dao
+
+storage:
+  state_db: data/state.sqlite3
+  jsonl_dir: data/runs
+
+google_sheets:
+  enabled: true
+  spreadsheet_id: 1pWQcZkVq_hS0UzITtr5bA9mEb3SPJSYdXBXRpHbzF-k
+  worksheet: raw_data
+  service_account_file_env: GOOGLE_SERVICE_ACCOUNT_FILE
+  service_account_json_env: GOOGLE_SERVICE_ACCOUNT_JSON
+  batch_size: 200
+
+facebook:
+  enabled: false
+  terms_acknowledged: false
+  graph_version: v26.0
+  access_token_env: META_ACCESS_TOKEN
+  # Chi Facebook Page ID hoac username. Facebook Groups API khong con ho tro use case nay.
+  pages:
+    # - id: your_page_id
+    #   name: Ten fanpage truong
+    #   trusted_education_source: true
+    []
+  posts_per_page: 25
+  comments_per_post: 100
+  replies_per_comment: 50
+
+threads:
+  enabled: true
+  terms_acknowledged: true
+  api_version: v1.0
+  access_token_env: THREADS_ACCESS_TOKEN
+  queries:
+    - text: sinh vien
+      search_type: RECENT
+      search_mode: KEYWORD
+      trusted_education_source: true
+    - text: hoc phi
+      search_type: RECENT
+      search_mode: KEYWORD
+      trusted_education_source: true
+    - text: drama truong hoc
+      search_type: RECENT
+      search_mode: KEYWORD
+      trusted_education_source: true
+    - text: tinh yeu sinh vien
+      search_type: RECENT
+      search_mode: KEYWORD
+      trusted_education_source: true
+    - text: boc phot truong
+      search_type: RECENT
+      search_mode: KEYWORD
+      trusted_education_source: true
+    - text: xin loi confession
+      search_type: RECENT
+      search_mode: KEYWORD
+      trusted_education_source: true
+  posts_per_query: 50
+  fetch_replies: true
+  replies_per_post: 50
+
+reddit:
+  enabled: false
+  # Bat buoc true sau khi ban co quyen phu hop tu Reddit/chu so huu noi dung.
+  terms_acknowledged: false
+  client_id_env: REDDIT_CLIENT_ID
+  client_secret_env: REDDIT_CLIENT_SECRET
+  user_agent_env: REDDIT_USER_AGENT
+  subreddits:
+    # Vi du, hay thay bang cac cong dong phu hop va duoc phep.
+    - name: VietNam
+      trusted_education_source: false
+      queries:
+        - sinh vien
+        - hoc tap
+        - thi dai hoc
+        - drama truong hoc
+        - tinh yeu sinh vien
+        - boc phot truong
+        - xin loi confession
+  posts_per_query: 25
+  comments_per_post: 100
+  sort: new
+  time_filter: month
+  include_nsfw: false

@@ -1,0 +1,16 @@
+Aim.md
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+data/
+*.db
+*.sqlite3
+service-account*.json
+secret/
+.pytest_tmp/
+.ruff_cache/
